@@ -9,12 +9,20 @@
 import cv2
 import numpy as np
 
-
+global idealMasalaH
+global idealMasalaW
+global idealStickH
+global idealStickW
 global unitW
 global unitH
 global unit
+idealMasalaH=20
+idealMasalaW=20
+idealStickH=20
+idealStickW=20
 unitW=20
 unitH=20
+unit=20
 trigger=False
 
 def start():
@@ -107,7 +115,9 @@ def start():
         cap.release()
         cv2.destroyAllWindows()
     except Exception as e:
-        print("Human intervention required",e)
+        print("Human intervention required.",e)
+        cv2.destroyAllWindows()
+        cap.release()
     
 
 def calibrate():
@@ -159,6 +169,8 @@ def calibrate():
             cap.release()
     except Exception as e:
         print('Calibration error has occured.\nPlease recalibrate.')
+        cv2.destroyAllWindows()
+        cap.release()
 
 def ideal():
     try:
@@ -248,4 +260,18 @@ def ideal():
         print("The dimentions of the ideal product are ",idealMasalaH+idealStickH," units"," by ",idealMasalaW,"units")
     except Exception as e:
         print(e)
-
+        cap.release()
+        cv2.destroyAllWindows()
+x=1
+while(x>0):
+    inputtext=input("Write your command $ ")
+    if(inputtext == "calibrate"):
+        calibrate()
+    elif(inputtext == "ideal"):
+        ideal()
+    elif(inputtext == "start"):
+        start()
+    elif(inputtext == "quit"):
+        quit()
+    else:
+        print("Please enter a valid command")
