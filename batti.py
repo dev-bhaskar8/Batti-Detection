@@ -94,7 +94,7 @@ def start():
                 
 
             cv2.imshow('start', image)
-            cv2.imshow('start_mask', mask)
+            
             
             masalaH=masalaH/unit
             masalaW=masalaW/unit
