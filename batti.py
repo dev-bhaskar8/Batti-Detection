@@ -16,13 +16,13 @@ global idealStickW
 global unitW
 global unitH
 global unit
-idealMasalaH=20
-idealMasalaW=20
-idealStickH=20
-idealStickW=20
-unitW=20
-unitH=20
-unit=20
+##idealMasalaH=20
+##idealMasalaW=20
+##idealStickH=20
+##idealStickW=20
+##unitW=20
+##unitH=20
+##unit=20
 trigger=False
 
 def start():
@@ -133,8 +133,8 @@ def calibrate():
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
 
-        lower_skin = np.array([30,150,50])
-        upper_skin = np.array([255,255,180])
+        lower_skin = np.array([20,90,90])
+        upper_skin = np.array([120,255,255])
 
         mask = cv2.inRange(hsv, lower_skin, upper_skin)
 
@@ -145,16 +145,16 @@ def calibrate():
 
         im2, cnts, hierarchy = cv2.findContours(mask.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-        counter=0
+        #counter=0
         for c in cnts:
             c = max(cnts, key = cv2.contourArea)
             if cv2.contourArea(c) < 0:
                 continue
             x, y, calW, calH = cv2.boundingRect(c)
             cv2.rectangle(image, (x,y), (x+calW,y+calH), (0, 255, 0), 2)
-            counter+=1
-        if counter>1:
-            raise Exception('Calibrate with only one object')
+            #counter+=1
+        #if counter>1:
+        #    raise Exception('Calibrate with only one object')
         unitW = calW
         unitH = calH
         global unit
@@ -168,7 +168,7 @@ def calibrate():
             cv2.destroyAllWindows()
             cap.release()
     except Exception as e:
-        print('Calibration error has occured.\nPlease recalibrate.')
+        print('Calibration error has occured.\nPlease recalibrate.',e)
         cv2.destroyAllWindows()
         cap.release()
 
